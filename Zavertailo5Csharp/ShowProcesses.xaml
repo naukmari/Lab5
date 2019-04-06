@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Zavertailo5Csharp.ShowProcesses"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Zavertailo5Csharp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1325">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Grid.Row="0" SelectionMode="Single" SelectedItem="{Binding SelectedProcess}" Grid.Column="1" Name="ProcessesDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Processes, Mode=OneWay}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Open File Location" Command="{Binding GetFileLocation}"/>
+                    <MenuItem Header="Info about modules and threads" Command="{Binding GetInfo}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Process" MaxWidth="150" IsReadOnly="True" Binding="{Binding ProcessName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ID" MaxWidth="150" IsReadOnly="True" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Is Active?" MaxWidth="150" IsReadOnly="True" Binding="{Binding IsActive}"></DataGridTextColumn>
+                <DataGridTextColumn Header="CPU" MaxWidth="150" IsReadOnly="True" Binding="{Binding CpuUsed}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Memory" MaxWidth="150" IsReadOnly="True" Binding="{Binding RamUsed}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Threads" MaxWidth="150" IsReadOnly="True" Binding="{Binding ThreadsCnt}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Owner" MaxWidth="150" IsReadOnly="True" Binding="{Binding Owner}"></DataGridTextColumn>
+                <DataGridTextColumn Header="File Path" MaxWidth="700" IsReadOnly="True" Binding="{Binding FilePath}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Run On" MaxWidth="150" IsReadOnly="True" Binding="{Binding WasStarted}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="1" Grid.Column="1" Content="Kill" Margin="2" IsEnabled="{Binding IsItemSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding KillTaskCommand}"></Button>
+    </Grid>
+</UserControl>
